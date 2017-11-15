@@ -6,8 +6,8 @@
 //  Copyright © 2016 Mads Tilgaard Jensen. All rights reserved.
 //
 
-#ifndef Graph_hpp
-#define Graph_hpp
+//#ifndef Graph_hpp
+//#define Graph_hpp
 
 #include <stdio.h>
 #include <vector>
@@ -102,4 +102,4 @@ private:
 
 };
 
-#endif /* Graph_hpp */
+//#endif /* Graph_hpp */

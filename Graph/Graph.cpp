@@ -107,7 +107,7 @@ Edge* Graph::getEdge(Vertex *x, Vertex *y)
         if (x->getEdges()[i]->getEnd() == y)
             return x->getEdges()[i];
     }
-    return nullptr;
+    return 0;
 }
 
 void Graph::topologicalSorting()
@@ -364,7 +364,7 @@ bool Dijkstra::moreToCalculate()
 
 Vertex* Dijkstra::nextVertex()
 {
-    Vertex* next = nullptr;
+    Vertex* next = 0;
     int dist = 255;
     for (int i = 0; i < vertices.size(); i++)
     {
