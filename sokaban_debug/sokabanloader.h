@@ -1,22 +1,27 @@
-#ifndef SOKABANLOADER_H
-#define SOKABANLOADER_H
+#ifndef SOKOBANLOADER_H
+#define SOKOBANLOADER_H
 #include <string>
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 using namespace std;
-class SokabanLoader
+class SokobanLoader
 {
 public:
-    SokabanLoader();
+    SokobanLoader();
     int loaderFSM(string location, bool forcestate, int statetoForce); //Returning current state
     void loadMap(string location);
-    vector<vector<char> > initMap(int width, int height);
+    vector<vector<int>> initMap(int width, int height);
+    void generateTree(vector<vector<int>> map); // Should return tree
+    void expandTree(vector<vector<int>> map, int x, int y); // Void, only adds nodes to tree
     //General debugging methods
     void printMap();
+
 private:
-    vector<vector<char> >  charMap; //Storing in vector vector gives the implicit x, y value
+    vector<vector<int> >  intMap; //Storing in vector vector gives the implicit x, y value
+
     //FSM variables
     int currentState;
     int nextState;
@@ -27,5 +32,4 @@ private:
     int noDiamonds;
 };
 
-#endif // SOKABANLOADER_H
-
+#endif // SOKOBANLOADER_H
