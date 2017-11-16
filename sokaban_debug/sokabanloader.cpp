@@ -1,5 +1,4 @@
 #include "sokabanloader.h"
-//#include "../Graph/Graph.hpp"
 
 SokabanLoader::SokabanLoader()
 {
@@ -54,7 +53,6 @@ void SokabanLoader::loadMap(string location)
             {
                 for(int i = 0; i< line.size(); i++)
                 {
-                    //Going through all characters in the text file one at a time.
                     charMap[i][heightIterator] = line[i];
                    // cout << line[i] << " ";
                 }
@@ -86,64 +84,4 @@ vector<vector<char> > SokabanLoader::initMap(int width, int height)
 {
     vector<vector<char> > map(width, vector<char>(height)); //Credits to user Dukeling at: https://stackoverflow.com/questions/14959393/pointer-to-a-multidimensional-vector
     return map;
-}
-
-Graph* SokabanLoader::vectorToGraph()
-{
-    Graph* map = new Graph;
-    vector<vector<Vertex*> > pointerMatrix(width, vector<Vertex*>(height));
-    int center;
-    /*int left;
-    int right;
-    int up;
-    int down; */
-    for (int y = 0; y < height; y++)
-        for (int x = 0; x< width; x++)
-        {
-            if ( char2int(charMap[x][y]) < 6 ) //Going through all of the map
-            {
-                center = char2int(charMap[x][y]);
-                //left = char2int(charMap[x-1][y]);
-                //right = char2int(charMap[x+1][y]);
-                //down = char2int(charMap[x][y+1]);
-                //up = char2int(charMap[x][y-1]);
-                //Creating the vertex
-                Vertex* tmpVertex = new Vertex(center);
-                map->addVertex(tmpVertex);
-                pointerMatrix[x][y] = tmpVertex;
-            }
-        }
-
-    for (int y = 1; y < height-1; y++)
-        for (int x = 1; x< width-1; x++)
-        {
-            if (pointerMatrix[x-1][y] != 0) //Left edge
-            {
-                Edge* tmpEdge = new Edge(1,pointerMatrix[x][y]);
-                pointerMatrix[x-1][y]->addEdge(tmpEdge);
-            }
-            if (pointerMatrix[x][y-1] != 0)
-            {
-                Edge* tmpEdge = new Edge(1,pointerMatrix[x][y]);
-                pointerMatrix[x][y-1]->addEdge(tmpEdge);
-            }
-        }
-
-
-return map;
-}
-
-int SokabanLoader::char2int(char oneChar)
-
-{
-    if (oneChar == '.')
-        return 1;
-    else if ( oneChar== 'J')
-        return 4;
-    else if ( oneChar == 'G')
-        return 3;
-    else if ( oneChar == 'M')
-        return 5;
-
-    return 255; //Not a part of our graph
 }
