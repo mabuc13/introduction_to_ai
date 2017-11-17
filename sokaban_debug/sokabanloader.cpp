@@ -93,6 +93,11 @@ Graph* SokabanLoader::vectorToGraph()
     Graph* map = new Graph;
     vector<vector<Vertex*> > pointerMatrix(width, vector<Vertex*>(height));
     int center;
+    Vertex* current;
+    Vertex* left;
+    Vertex* right;
+    Vertex* down;
+    Vertex* up;
     /*int left;
     int right;
     int up;
@@ -100,7 +105,7 @@ Graph* SokabanLoader::vectorToGraph()
     for (int y = 0; y < height; y++)
         for (int x = 0; x< width; x++)
         {
-            if ( char2int(charMap[x][y]) < 6 ) //Going through all of the map
+            if ( char2int(charMap[x][y]) < 6 ) //Going through all of the map making vertexes
             {
                 center = char2int(charMap[x][y]);
                 //left = char2int(charMap[x-1][y]);
@@ -108,27 +113,47 @@ Graph* SokabanLoader::vectorToGraph()
                 //down = char2int(charMap[x][y+1]);
                 //up = char2int(charMap[x][y-1]);
                 //Creating the vertex
-                Vertex* tmpVertex = new Vertex(center);
+                Vertex* tmpVertex = new Vertex(center, x, y);
+
                 map->addVertex(tmpVertex);
-                pointerMatrix[x][y] = tmpVertex;
+
             }
         }
 
-    for (int y = 1; y < height-1; y++)
-        for (int x = 1; x< width-1; x++)
+    //Making edges
+    for (int y = 0; y < height; y++)
+        for (int x = 0; x< width; x++)
         {
-            if (pointerMatrix[x-1][y] != 0) //Left edge
+            if ( char2int(charMap[x][y]) < 6 ) //Going through all of the map making vertexes
             {
-                Edge* tmpEdge = new Edge(1,pointerMatrix[x][y]);
-                pointerMatrix[x-1][y]->addEdge(tmpEdge);
-            }
-            if (pointerMatrix[x][y-1] != 0)
-            {
-                Edge* tmpEdge = new Edge(1,pointerMatrix[x][y]);
-                pointerMatrix[x][y-1]->addEdge(tmpEdge);
+                //Get current vertex
+                current = map->xyFind(x, y);
+                //If there's a valid location to the left, add an edge
+                if ( char2int(charMap[x-1][y] < 6))
+                {
+                    left = map->xyFind(x-1, y);
+                    map->addEdge(current, left, 1);
+                }
+                //Same for right
+                if ( char2int(charMap[x+1][y] < 6))
+                {
+                    right = map->xyFind(x+1, y);
+                    map->addEdge(current, right, 1);
+                }
+                //Same for down
+                if ( char2int(charMap[x][y+1] < 6))
+                {
+                    down = map->xyFind(x, y+1);
+                    map->addEdge(current, down, 1);
+                }
+                //And at last the same for up
+                if ( char2int(charMap[x][y-1] < 6))
+                {
+                    up = map->xyFind(x, y);
+                    map->addEdge(current, up, 1);
+                }
             }
         }
-
 
 return map;
 }

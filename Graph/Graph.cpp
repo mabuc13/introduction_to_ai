@@ -162,6 +162,15 @@ std::vector<Vertex*> Graph::getVertices()
     return vertices;
 }
 
+Vertex* Graph::xyFind(int x, int y)
+{
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        if (vertices[i]->xCoord == x && vertices[i]->yCoord == y )
+            return vertices[i];
+    }
+}
+
 Graph::~Graph()
 {
 }
@@ -206,6 +215,13 @@ Vertex::Vertex(void)
 Vertex::Vertex(int v)
 {
     value = v;
+}
+
+Vertex::Vertex(int v, int x, int y)
+{
+    value = v;
+    xCoord = x;
+    yCoord = y;
 }
 
 void Vertex::setVertexValue(int v)

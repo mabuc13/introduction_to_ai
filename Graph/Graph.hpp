@@ -40,6 +40,7 @@ public:
     void printGraph();								//prints the vertices of the grahp.
 	void printGraphDistances();						//prints the vertices of the grahp with the distances from the main vertex.
     std::vector<Vertex*> getVertices();             //returns all the vertices of the graph.
+    Vertex* xyFind(int x, int y);
     ~Graph();
 	
 private:
@@ -60,6 +61,7 @@ public:
 private:
     int value;
     Vertex* end;
+
 };
 
 class Vertex
@@ -67,6 +69,7 @@ class Vertex
 public:
     Vertex(void);
     Vertex(int v);                                  //initializes a vertex with the value v.
+    Vertex(int v, int x, int y);
     void setVertexValue(int v);                     //sets the vertex value to v.
     void addEdge(Edge *e);                          //adds an edge to the vertex.
     std::vector<Edge*> getEdges();                  //returns a vector containing all the edges assign to the vertex.
@@ -75,6 +78,8 @@ public:
 	void setDistance(int d);                        //sets the distance to the vertex.
 	void clearDistance();                           //clears distance by setting it to 255.
 	void removeEdge(Edge *e);                       //removes an edge from the vertex.
+    int xCoord;
+    int yCoord;
     ~Vertex();
     
 private:
