@@ -11,21 +11,16 @@ using namespace std;
 int main()
 {
     SokabanLoader test;
-    while (true)
-    {
+    test.loadMap("testMap.txt");
 
-        int temp = test.loaderFSM("exampleMap.txt", 0, 0);
-        cout << temp << endl;
-        if (temp == 3)
-            break;
-    }
+
     //test.printMap();
 
     //test.initMap(10, 10);
-    Graph* map = new Graph;
+   // Graph* map = new Graph;
 
-    map = test.vectorToGraph();
-    map->printGraph();
+    //map = test.vectorToGraph();
+    //map->printGraph();
     return 0;
 }
 

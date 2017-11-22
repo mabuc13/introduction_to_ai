@@ -1,0 +1,9 @@
+08 08 01
+X X X X X X X X
+X . . . . . . X
+X . . . . . . X
+X . M . J . G X
+X . . . . . . X
+X . . . . . . X
+X . . . . . . X
+X X X X X X X X

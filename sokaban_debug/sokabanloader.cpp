@@ -33,7 +33,7 @@ void SokabanLoader::loadMap(string location)
 {
     string line; //The input we're iterating over
     cout << location.c_str() << endl;
-    ifstream txtMap(location.c_str()); //CHANGE ASAP
+    ifstream txtMap("exampleMap.txt"); //CHANGE ASAP
     bool firstLine = true;
     int heightIterator = 0;
     if (txtMap.is_open())
@@ -52,8 +52,10 @@ void SokabanLoader::loadMap(string location)
             }
             else
             {
+                cout << "Iterating over lines in text file" << endl;
                 for(int i = 0; i< line.size(); i++)
                 {
+
                     //Going through all characters in the text file one at a time.
                     charMap[i][heightIterator] = line[i];
                    // cout << line[i] << " ";
@@ -62,6 +64,7 @@ void SokabanLoader::loadMap(string location)
             }
         }
         txtMap.close();
+        intMap = charToIntMap(charMap);
         printMap();
     }
     else
@@ -75,7 +78,7 @@ void SokabanLoader::printMap()
     {
         for (int x = 0; x< width; x++ )
         {
-            cout << charMap[x][y] << " ";
+            cout << intMap[x][y] << " ";
         }
         cout << endl;
     }
@@ -164,11 +167,23 @@ int SokabanLoader::char2int(char oneChar)
     if (oneChar == '.')
         return 1;
     else if ( oneChar== 'J')
-        return 4;
-    else if ( oneChar == 'G')
         return 3;
+    else if ( oneChar == 'G')
+        return 2;
     else if ( oneChar == 'M')
+        return 4;
+    else if ( oneChar == 'X')
         return 5;
 
-    return 255; //Not a part of our graph
+    return 9; //Not a part of our graph
+}
+
+vector<vector<int> > SokabanLoader::charToIntMap(vector<vector<char> > input)
+{
+    vector<vector<int> > tmpMap(width, vector<int>(height));
+    for (int x = 0; x < width; x++)
+        for (int y = 0; y < width; y++)
+            tmpMap[x][y] = char2int(input[x][y]);
+
+    return tmpMap;
 }

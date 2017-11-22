@@ -22,11 +22,13 @@ public:
     vector<vector<char> > initMap(int width, int height);
     Graph* vectorToGraph();
     int char2int(char);
+    vector<vector<int> > charToIntMap(vector<vector<char> >);
 
     //General debugging methods
     void printMap();
 private:
     vector<vector<char> >  charMap; //Storing in vector vector gives the implicit x, y value
+    vector<vector<int> > intMap;
     //FSM variables
     int currentState;
     int nextState;
