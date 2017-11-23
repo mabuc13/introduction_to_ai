@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 #include "../Graph/Graph.hpp"
+#include "../trees/search_trees/tree.h"
+#include "../trees/search_trees/intmap.h"
 
 #define freespace = 1;
 #define wall = 2;
@@ -23,9 +25,13 @@ public:
     Graph* vectorToGraph();
     int char2int(char);
     vector<vector<int> > charToIntMap(vector<vector<char> >);
-
+    vector<vector<int> > getIntMap();
+    int getWidth();
+    int getHeight();
     //General debugging methods
     void printMap();
+    int xPos;
+    int yPos;
 private:
     vector<vector<char> >  charMap; //Storing in vector vector gives the implicit x, y value
     vector<vector<int> > intMap;
