@@ -16,8 +16,8 @@ public:
     tree();
     tree(int dat, tree * lf, tree * rt, tree * dw, tree * u, int h); //Data is the direction
     ~tree();
-    tree * insert(tree * root, int data, int depth, intMap map, int direction);
-    tree * getNewNode(int data, tree * root, intMap oneMap);
+    tree * insert(tree * root, int data, int depth, intMap map, int direction, tree * parent);
+    tree * getNewNode(int data, tree * root, intMap oneMap, tree * parent);
     int getNodesAmount(tree * root);
     int getLeavesAmount(tree * root);
     void printTree(tree * root, int h);
@@ -32,16 +32,7 @@ public:
     void printGivenDepth(tree * root, int i);
     void setVerbose(bool ver);
     void printInit(tree * root);
-    //Methods to move the robot in the map according to sokoban rules
-//    bool legalUp(intMap map);
-//    bool legalRight(intMap map);
-//    bool legalDown(intMap map);
-//    bool legalLeft(intMap map);
-
-//    intMap moveUp(intMap map);
-//    intMap moveRight(intMap map);
-//    intMap moveDown(intMap map);
-//    intMap moveLeft(intMap map);
+    void printPath(tree * root);
 
 public:
 	int data;
@@ -57,6 +48,7 @@ public:
 	high_resolution_clock::time_point t2;
     intMap  map;
     bool Verbose;
+    bool flag = true;
 private:
     bool init;
 

@@ -9,7 +9,7 @@ class intMap
 {
 public:
     intMap();
-    intMap(vector<vector<int> > inputMap, int w, int h, int xPos, int yPos);
+    intMap(vector<vector<int> > inputMap, int w, int h, int xPos, int yPos, int noGoals);
     ~intMap();
 
     bool legalUp();
@@ -29,8 +29,11 @@ public:
     int x; //Robots x position
     int y; //Robots y position
     vector<vector<int> > map;
+    vector<vector<int> > origMap;
     int height;
     int width;
+    int freeGoals;
+
 
 };
 

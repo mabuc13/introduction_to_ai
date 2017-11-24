@@ -28,6 +28,7 @@ public:
     vector<vector<int> > getIntMap();
     int getWidth();
     int getHeight();
+    int getGoals();
     //General debugging methods
     void printMap();
     int xPos;

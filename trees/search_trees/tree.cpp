@@ -19,13 +19,23 @@ tree::~tree()
 {
 }
 
-tree * tree::insert(tree * root, int data, int depth, intMap map, int direction)
+tree * tree::insert(tree * root, int data, int depth, intMap map, int direction, tree * oneParent)
 {
-
-    //cout << "Map solved?: " << map.solved << endl;
+    map.printMap();
+    cout << endl;
     if (map.solved)
     {
-        map.printMap();
+        //cout << "Root: " << root << endl;
+        if (flag)
+        {
+            root = getNewNode(data, root, map, oneParent);
+            map.printMap();
+            printPath(root);
+            cout << endl;
+            cout << endl;
+            flag = false;
+        }
+        //printPath(root);
         return root;
     }
     //cout << "Entering insert" << endl;
@@ -48,7 +58,7 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction)
     {
         if (data == 20)
         {
-            root = getNewNode(data, root, map);
+            root = getNewNode(data, root, map, oneParent);
             root->depth = depth;
             root->init = true;
         }
@@ -58,11 +68,11 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction)
             {
             case 21:
                 if (direction == 21)
-                {// cout << "root->parent->left " << root->parent->data << endl;}
+                {
                     if (map.legalUp())
                     {
                         upMap.moveUp();
-                        root = getNewNode(data, root, upMap);
+                        root = getNewNode(data, root, upMap, oneParent);
                         root->depth = depth;
                         root->init = true;
 
@@ -78,7 +88,7 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction)
                     if (map.legalRight())
                     {
                         rightMap.moveRight();
-                        root = getNewNode(data, root, rightMap);
+                        root = getNewNode(data, root, rightMap, oneParent);
                         root->depth = depth;
                     }
                     else
@@ -92,7 +102,7 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction)
                     if (map.legalDown())
                     {
                         downMap.moveDown();
-                        root = getNewNode(data, root, downMap);
+                        root = getNewNode(data, root, downMap, oneParent);
                         root->depth = depth;
                     }
                     else
@@ -106,7 +116,7 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction)
                     if (map.legalLeft())
                     {
                         leftMap.moveLeft();
-                        root = getNewNode(data, root, leftMap);
+                        root = getNewNode(data, root, leftMap, oneParent);
                         root->depth = depth;
                     }
                     else
@@ -119,118 +129,29 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction)
 
             }
 
-//            upMap.moveUp();
-//            root->up = getNewNode(data, root, upMap);
-
-//            rightMap.moveRight();
-//            root->right = getNewNode(data, root, rightMap);
-
-//            downMap.moveDown();
-//            root->down = getNewNode(data, root, downMap);
-
-//            leftMap.moveLeft();
-//            root->left = getNewNode(data, root, leftMap);
-            //Create the new node
-            //root = getNewNode(data, root, root->map); //Maybe delete this
-
         }
     }
     else
     {
-        depth++;
-    //Traversing the tree until we're in the leaves, where we in the leaves expand the trees
+        if (!(map.solved))
+        {
+            depth++;
+        //Traversing the tree until we're in the leaves, where we in the leaves expand the trees
 
-            root->up = insert(root->up, data, depth, root->map, 21);
+            root->up = insert(root->up, data, depth, root->map, 21, root);
 
-            root->right = insert(root->right, data, depth, root->map, 22);
+            root->right = insert(root->right, data, depth, root->map, 22, root);
 
-            root->down = insert(root->down, data, depth, root->map, 23);
+            root->down = insert(root->down, data, depth, root->map, 23, root);
 
-            root->left = insert(root->left, data, depth, root->map, 24);
+            root->left = insert(root->left, data, depth, root->map, 24, root);
+
+        }
     }
 return root;
-
-//    else
-//    {
-//    switch (data)
-//    {
-//        case 20:
-//            depth++;
-//            root = insert(root, 20, depth, map);         //Starting position
-//            break;
-
-//        case 21:                                            //Up
-//            cout << "Entering case up" << endl;
-
-//            if(root->map.legalUp())
-//            {
-//                intMap tmp = root->map;
-//                cout << "About to run case up code" << endl;
-//                depth++;
-//                tmp.moveUp();
-//               //root->map.printMap();
-//                cout << "root->map.moveup() completed" << endl;
-//                root->up = insert(root->up, 21, depth, tmp);
-//                cout << "root->up initialized " << endl;
-//                break;
-//            }
-//            else
-//                break;
-
-//        case 22:                                            //Right
-//        if(root->map.legalRight())
-//        {
-//            depth++;
-//            root->map.moveRight();
-//            root->right = insert(root->right, 22, depth, root->map);
-//            break;
-//        }
-//        else
-//            break;
-
-//        case 23:                                            //Down
-//        if(root->map.legalDown())
-//        {
-//            depth++;
-//            root->map.moveDown();
-//            root->down = insert(root->down, 23, depth, root->map);
-//            break;
-//        }
-//        else
-//            break;
-
-//        case 24:                                            //Left
-//        if(map.legalLeft())
-//        {
-//            depth++;
-//            map.moveLeft();
-//            root->left = insert(root->left, 24, depth, root->map);
-//            break;
-//        }
-//        else
-//            break;
-
-//        default:
-//            break;
-//    }
-//    }
-
-//    else if (data <= root->data)
-//    {
-//        depth++;
-//        root->left = insert(root->left, data, depth);
-		
-//    }
-//    else
-//    {
-//        depth++;
-//        root->right = insert(root->right, data, depth);
-		
-//    }
-    //return root;
 }
 
-tree * tree::getNewNode(int data, tree * root, intMap oneMap)
+tree * tree::getNewNode(int data, tree * root, intMap oneMap, tree * oneParent)
 {
  //   cout << "Called getNewNode" << endl;
     tree * newNode = new tree();
@@ -238,7 +159,7 @@ tree * tree::getNewNode(int data, tree * root, intMap oneMap)
     newNode->right = newNode->left = newNode->up = newNode->down = NULL;
     newNode->map = oneMap;
     newNode->init = false;
-    newNode->parent = root;
+    newNode->parent = oneParent;
    // newNode->map.printMap();
    // cout << endl;
 	return newNode;
@@ -379,6 +300,20 @@ void tree::setVerbose(bool ver)
 void tree::printInit(tree *root)
 {
     cout << root->init << endl;
+}
+
+void tree::printPath(tree *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    printPath(root->parent);
+    cout << root->data << "->";
+    if (root->parent== NULL)
+        cout << endl;
+    return;
+
 }
 
 //bool tree::legalUp(intMap map) //Left and up is minus, down and right is plus

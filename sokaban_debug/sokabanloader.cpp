@@ -21,6 +21,7 @@ int SokabanLoader::loaderFSM(string location, bool forceState,int stateToForce)
                nextState = 3;
                 return currentState;
     case 3: //Standby state
+                cout << "Loaded map from: " << location << endl;
                 nextState = currentState;
                 return currentState;
         break;
@@ -32,7 +33,6 @@ int SokabanLoader::loaderFSM(string location, bool forceState,int stateToForce)
 void SokabanLoader::loadMap(string location)
 {
     string line; //The input we're iterating over
-    cout << location.c_str() << endl;
     ifstream txtMap(location.c_str()); //CHANGE ASAP
     bool firstLine = true;
     int heightIterator = 0;
@@ -43,12 +43,12 @@ void SokabanLoader::loadMap(string location)
             if (firstLine == true)
             {
                 width = ((int)line[0]-48)*10 + (int)line[1]-48; //-48 is the offset between ascii table start index and ints start index
-                cout << "line: " << line << endl;
+                cout << "Width Height Goals / Boxes: " << endl << line << endl;
+                cout << "Map:" << endl;
                 height = (int)(line[3]-48)*10 + (int)(line[4]-48);
-                noDiamonds = (int)line[6]*10 +(int)line[7];
+                noDiamonds = (int)(line[6]-48)*10 +(int)line[7]-48;
                 firstLine = false;
                 charMap = initMap(width, height);
-                cout << "width: " << width << " height: " << height << endl;
             }
             else
             {
@@ -209,4 +209,9 @@ int SokabanLoader::getHeight()
 int SokabanLoader::getWidth()
 {
     return width;
+}
+
+int SokabanLoader::getGoals()
+{
+    return noDiamonds;
 }

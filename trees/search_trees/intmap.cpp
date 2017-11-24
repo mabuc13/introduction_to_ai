@@ -4,15 +4,19 @@ intMap::intMap()
 {
 }
 
-intMap::intMap(vector<vector<int> > inputMap, int w, int h, int xPos, int yPos)
+intMap::intMap(vector<vector<int> > inputMap, int w, int h, int xPos, int yPos, int noGoals)
 {
     map = inputMap;
+    origMap = inputMap;
+    freeGoals = noGoals;
     width = w;
     height = h;
     x = xPos;
     y = yPos;
     solved = false;
 }
+
+
 
 intMap::~intMap()
 {
@@ -27,7 +31,7 @@ bool intMap::legalUp()
     //Check if there's a box above AND that the box can move to next spot
     if (map[x][y-1] == 3)
     {
-        if (map[x][y-2] == 5)
+        if (map[x][y-2] == 5 || 3 || 7)
             return false;
     }
     return true;
@@ -41,7 +45,7 @@ bool intMap::legalRight()
     //Check if there's a box to the right AND that the box can move to next spot
     if (map[x+1][y] == 3)
     {
-        if (map[x+2][y] == 5)
+        if (map[x+2][y] == 5 || 3 || 7)
             return false;
     }
     return true;
@@ -55,7 +59,7 @@ bool intMap::legalDown()
     //Check if there's a box below AND that the box can move to next spot
     if (map[x][y+1] == 3)
     {
-        if (map[x][y+2] == 5)
+        if (map[x][y+2] == 5 || 3 || 7)
             return false;
     }
     return true;
@@ -69,7 +73,7 @@ bool intMap::legalLeft()
     //Check if there's a box to the right AND that the box can move to next spot
     if (map[x-1][y] == 3)
     {
-        if (map[x-2][y] == 5)
+        if (map[x-2][y] == 5 || 3 || 7)
             return false;
     }
     return true;
@@ -78,31 +82,82 @@ bool intMap::legalLeft()
 void intMap::moveUp()
 {
     //We know it's a legal move, so in all cases the current xy is free
-    map[x][y] = 1;
+
+    //The safe method
+    if (map[x][y] == 6)
+        map[x][y] = 2;
+    else
+        map[x][y] = 1;
+
+    //or this lazy method
+//    if (origMap[x][y] == 2)
+//        map[x][y] = 2;
+//    else
+//        map[x][y] = 1;
 
     //If there's a box above, move it upwards
-    if (map[x][y-1] == 3)
-        map[x][y-2] = 3;
+    if (map[x][y-1] == 3 || 7)
+    {
+        if (map[x][y-2] == 2)
+            map[x][y-2] = 7;
+        else
+            map[x][y-2] = 3;
+    }
 
     //The new position of the man
-    map[x][y-1] = 4;
+    if (map[x][y-1] == 2) //New position for mangoal or boxgoal
+        map[x][y-1] = 6;
+    else
+        map[x][y-1] = 4;
+
     y = y-1;
 
     bool dummy = puzzleSolved();
     //return map;
 }
 
+
 void intMap::moveRight()
 {
     //We know it's a legal move, so in all cases the current xy is free
-    map[x][y] = 1;
+    if (map[x][y] == 6)
+        map[x][y] = 2;
+    else
+        map[x][y] = 1;
 
-    //If there's a box above, move it to the right
-    if (map[x+1][y] == 3)
-        map[x+2][y] = 3;
+    int temp = map[x+1][y];
 
+    //If there's a box to the right, move it to the right
+    if (map[x+1][y] == 3) // If there's a box, check behind the box
+    {
+        if (map[x+2][y] == 2){ // If there's a goal behind box, make goalbox
+            map[x+2][y] = 7;
+        }
+        else
+            map[x+2][y] = 3; // Else just box
+    }
+
+    else if (map[x+1][y] == 7) // If there's goalbox, check behind goalbox
+    {
+        if (map[x+2][y] == 2){ // If there's goal, make goalbox
+            map[x+2][y] = 7;
+        }
+        else
+            map[x+2][y] = 3; // Else just box
+        map[x+1][y] = 6; // Move robot to goal
+    }
+    else if(map[x+1][y] == 2) // If goal
+        map[x+1][y] = 6; // Make mangoal
+
+    if (map[x+1][y] == temp)
+        map[x+1][y] = 4;
     //The new position of the man
-    map[x+1][y] = 4;
+//    if (map[x+1][y] == 2 || 7) //New position for mangoal or boxgoal
+//        map[x+1][y] = 6;
+//    else
+//        map[x+1][y] = 4;
+
+
     x = x +1;
 
     bool dummy = puzzleSolved();
@@ -112,14 +167,26 @@ void intMap::moveRight()
 void intMap::moveDown()
 {
     //We know it's a legal move, so in all cases the current xy is free
-    map[x][y] = 1;
+    if (map[x][y] == 6)
+        map[x][y] = 2;
+    else
+        map[x][y] = 1;
 
-    //If there's a box above, move it down
-    if (map[x][y+1] == 3)
-        map[x][y+2] = 3;
+    //If there's a box below, move it down
+    if (map[x][y+1] == 3 || 7)
+    {
+        if (map[x][y+2] == 2)
+            map[x][y+2] = 7;
+        else
+            map[x][y+2] = 3;
+    }
 
     //The new position of the man
-    map[x][y+1] = 4;
+    if (map[x][y+1] == 2) //New position for mangoal or boxgoal
+        map[x][y+1] = 6;
+    else
+        map[x][y+1] = 4;
+
     y = y+1;
 
     bool dummy = puzzleSolved();
@@ -129,14 +196,25 @@ void intMap::moveDown()
 void intMap::moveLeft()
 {
     //We know it's a legal move, so in all cases the current xy is free
-    map[x][y] = 1;
+    if (map[x][y] == 6)
+        map[x][y] = 2;
+    else
+        map[x][y] = 1;
 
-    //If there's a box above, move it to the left
-    if (map[x-1][y] == 3)
-        map[x-2][y] = 3;
-
+    //If there's a box to the left, move it to the left
+    if (map[x-1][y] == 3 || 7)
+    {
+        if (map[x-2][y] == 2)
+            map[x-2][y] = 7;
+        else
+            map[x-2][y] = 3;
+    }
     //The new position of the man
-    map[x-1][y] = 4;
+    if (map[x-1][y] == 2) //New position for mangoal or boxgoal
+        map[x-1][y] = 6;
+    else
+        map[x-1][y] = 4;
+
     x = x -1;
     bool dummy = puzzleSolved();
     //return map;
@@ -144,12 +222,14 @@ void intMap::moveLeft()
 
 bool intMap::puzzleSolved()
 {
-    int goalCounter = 0;
+    int goalCounter = freeGoals;
+    //cout << "Goalcounter: " << goalCounter << endl;
     for (int x = 0; x < width; x++)
         for(int y = 0; y < height; y++)
         {
-            if(map[x][y] == 2)
-                goalCounter++;
+            if(origMap[x][y] == 2)
+                if (map[x][y] == 3)
+                    goalCounter--;
         }
     if (goalCounter == 0)
     {
