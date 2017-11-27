@@ -23,9 +23,10 @@ int main()
     string filename = oss.str();
     //freopen("solver_output.txt","a",stdout);
     cout << "d-m-y_H:M:S " << oss.str() << endl;
+
     SokabanLoader loader;
 
-    loader.loadMap("testMap.txt");
+    loader.loadMap("exampleMap.txt");
 
     intMap sokobanMap(loader.getIntMap(), loader.getWidth(), loader.getHeight(), loader.xPos, loader.yPos, loader.getGoals());
     tree dummy;
@@ -34,33 +35,19 @@ int main()
     root = root->insert(root, 20, 0, sokobanMap, 0, NULL);
     cout << "Created root of tree, expanding until solution found." << endl;
 
-    sokobanMap.moveRight();
-    cout << endl;
-    sokobanMap.printMap();
-    cout << endl;
+    //cout << "Legalleft?:" << sokobanMap.legalLeft() << endl;
 
-    sokobanMap.moveRight();
-    cout << endl;
-    sokobanMap.printMap();
-    cout << endl;
-
-    sokobanMap.moveRight();
-    cout << endl;
-    sokobanMap.printMap();
-    cout << endl;
-
-
-//    for(int i = 0; i < 8 ; i++)
-//    {
-//        if (root->flag)
-//        {
-//            root = root->insert(root, 21, 0, sokobanMap, 0, NULL);
-//            root = root->insert(root, 22, 0, sokobanMap, 0, NULL);
-//            root = root->insert(root, 23, 0, sokobanMap, 0, NULL);
-//            root = root->insert(root, 24, 0, sokobanMap, 0, NULL);
-//        }
-//        cout<< "i: " << i << endl;
-//    }
+    for(int i = 0; i < 7 ; i++)
+    {
+        if (root->flag)
+        {
+            root = root->insert(root, 21, 0, sokobanMap, 0, NULL);
+            root = root->insert(root, 22, 0, sokobanMap, 0, NULL);
+            root = root->insert(root, 23, 0, sokobanMap, 0, NULL);
+            root = root->insert(root, 24, 0, sokobanMap, 0, NULL);
+        }
+        cout<< "i: " << i << endl;
+    }
     dummy.stopClock();
     cout << "End of program" << endl << endl;
     //root->printTree(root, 0);

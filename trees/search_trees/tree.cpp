@@ -21,8 +21,9 @@ tree::~tree()
 
 tree * tree::insert(tree * root, int data, int depth, intMap map, int direction, tree * oneParent)
 {
-    map.printMap();
-    cout << endl;
+
+    //map.printMap();
+
     if (map.solved)
     {
         //cout << "Root: " << root << endl;
