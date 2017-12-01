@@ -31,7 +31,11 @@ bool intMap::legalUp()
     //Check if there's a box above AND that the box can move to next spot
     if (map[x][y-1] == 3)
     {
-        if (map[x][y-2] == (5 || 3 || 7))
+        if (map[x][y-2] == 5)
+            return false;
+        if (map[x][y-2] == 3)
+            return false;
+        if (map[x][y-2] == 7)
             return false;
     }
     return true;
@@ -45,7 +49,11 @@ bool intMap::legalRight()
     //Check if there's a box to the right AND that the box can move to next spot
     if (map[x+1][y] == 3)
     {
-        if (map[x+2][y] == (5 || 3 || 7))
+        if (map[x+2][y] == 5)
+            return false;
+        if (map[x+2][y] == 3)
+            return false;
+        if (map[x+2][y] == 7)
             return false;
     }
     return true;
@@ -59,7 +67,11 @@ bool intMap::legalDown()
     //Check if there's a box below AND that the box can move to next spot
     if (map[x][y+1] == 3)
     {
-        if (map[x][y+2] == (5 || 3 || 7))
+        if (map[x][y+2] == 5)
+            return false;
+        if (map[x][y+2] == 3)
+            return false;
+        if (map[x][y+2] == 7)
             return false;
     }
     return true;
@@ -73,7 +85,11 @@ bool intMap::legalLeft()
     //Check if there's a box to the right AND that the box can move to next spot
     if (map[x-1][y] == 3)
     {
-        if (map[x-2][y] == (5 || 3 || 7))
+        if (map[x-2][y] == 5)
+            return false;
+        if (map[x-2][y] == 3)
+            return false;
+        if (map[x-2][y] == 7)
             return false;
     }
     return true;
@@ -245,6 +261,7 @@ void intMap::moveLeft()
 
 bool intMap::puzzleSolved()
 {
+    deadMap = goodMap();
     int goalCounter = freeGoals;
     //cout << "Goalcounter: " << goalCounter << endl;
     for (int x = 0; x < width; x++)
@@ -265,6 +282,32 @@ bool intMap::puzzleSolved()
         solved = false;
         return false;
     }
+}
+
+bool intMap::goodMap()
+{
+
+    for (int y = 0; y< height; y++ )
+    {
+        for (int x = 0; x< width; x++ )
+        {
+            if (map[x][y] == 3) //Box at current position
+            {
+                int counter = 0;
+                if (map[x-1][y] == 5)
+                    counter++;
+                if (map[x+1][y] == 5)
+                    counter++;
+                if (map[x][y-1] == 5)
+                    counter++;
+                if (map[x][y+1] == 5)
+                    counter++;
+                if (counter > 1)
+                    return true;
+            }
+        }
+    }
+    return false;
 }
 
 void intMap::printMap()

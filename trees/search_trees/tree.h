@@ -10,6 +10,7 @@ using namespace std::chrono;
 #define righdD 22
 #define downD 23
 #define leftD 24
+
 class tree
 {
 public:
@@ -31,7 +32,7 @@ public:
     int  assignHeight(tree * root);
     void printGivenDepth(tree * root, int i);
     void setVerbose(bool ver);
-    void printInit(tree * root);
+   // void printInit(tree * root);
     void printPath(tree * root);
 
 public:
@@ -41,7 +42,7 @@ public:
     tree * up;
     tree * down;
     tree * parent;
-
+    int nodeCounter;
 	int height;
 	int depth;
 	high_resolution_clock::time_point t1;
@@ -49,8 +50,6 @@ public:
     intMap  map;
     bool Verbose;
     bool flag = true;
-private:
-    bool init;
 
 
 };

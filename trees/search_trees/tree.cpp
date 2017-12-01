@@ -61,7 +61,7 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction,
         {
             root = getNewNode(data, root, map, oneParent);
             root->depth = depth;
-            root->init = true;
+            //root->init = true;
         }
         else
         {
@@ -75,7 +75,7 @@ tree * tree::insert(tree * root, int data, int depth, intMap map, int direction,
                         upMap.moveUp();
                         root = getNewNode(data, root, upMap, oneParent);
                         root->depth = depth;
-                        root->init = true;
+                        //root->init = true;
 
                     }
                     else
@@ -154,15 +154,31 @@ return root;
 
 tree * tree::getNewNode(int data, tree * root, intMap oneMap, tree * oneParent)
 {
- //   cout << "Called getNewNode" << endl;
+    //cout << "Called getNewNode" << endl;
     tree * newNode = new tree();
 	newNode->data = data;
     newNode->right = newNode->left = newNode->up = newNode->down = NULL;
     newNode->map = oneMap;
-    newNode->init = false;
+
     newNode->parent = oneParent;
-   // newNode->map.printMap();
-   // cout << endl;
+    newNode->nodeCounter++;
+    if (oneMap.deadMap)
+    {
+//        newNode->map.printMap();
+//        cout << endl;
+        newNode->data = 15;
+    }
+//    newNode->map.printMap();
+//    cout << endl;
+//    if (newNode->nodeCounter == 1)
+//    {
+//       // cout << "Nodes data / parents data " << newNode->data << ", " /*<< oneParent->data */<< endl;
+//        //newNode->map.printMap();
+//        //cout << "bingo" <<  endl;
+//       // printTree(oneParent, 0);
+//    }
+//    //cout << "Number of nodes: " << newNode->nodeCounter << endl;
+
 	return newNode;
 }
 
@@ -298,10 +314,10 @@ void tree::setVerbose(bool ver)
 
 }
 
-void tree::printInit(tree *root)
-{
-    cout << root->init << endl;
-}
+//void tree::printInit(tree *root)
+//{
+//    cout << root->init << endl;
+//}
 
 void tree::printPath(tree *root)
 {
