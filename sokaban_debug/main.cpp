@@ -21,7 +21,7 @@ int main()
     auto str = oss.str();
 
     string filename = oss.str();
-    freopen("solver_output.txt","a",stdout);
+    freopen("solver_output1.txt","a",stdout);
     cout << "d-m-y_H:M:S " << oss.str() << endl;
 
     SokabanLoader loader;
@@ -50,10 +50,10 @@ int main()
     {
         if (root->flag)
         {
-            root = root->insert(root, 21, 0, sokobanMap, 0, NULL);
-            root = root->insert(root, 22, 0, sokobanMap, 0, NULL);
-            root = root->insert(root, 23, 0, sokobanMap, 0, NULL);
-            root = root->insert(root, 24, 0, sokobanMap, 0, NULL);
+            root = root->insert(root, 21, 0, sokobanMap, 0, NULL); // 2 noder -- 15*2+ -- bekræfte med print tree
+            root = root->insert(root, 22, 0, sokobanMap, 0, NULL); // 4 noder -- 30*2 +1
+            root = root->insert(root, 23, 0, sokobanMap, 0, NULL);// 8 noder -- 60 *2 +1
+            root = root->insert(root, 24, 0, sokobanMap, 0, NULL); // 16 noder -- 120* 2 +1
         }
         cout<< "i: " << i << endl;
     }

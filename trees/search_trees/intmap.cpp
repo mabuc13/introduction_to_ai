@@ -293,16 +293,17 @@ bool intMap::goodMap()
         {
             if (map[x][y] == 3) //Box at current position
             {
-                int counter = 0;
-                if (map[x-1][y] == 5)
-                    counter++;
-                if (map[x+1][y] == 5)
-                    counter++;
-                if (map[x][y-1] == 5)
-                    counter++;
-                if (map[x][y+1] == 5)
-                    counter++;
-                if (counter > 1)
+                //Upper left corner
+                if (map[x-1][y] == 5 && map[x][y-1] == 5)
+                    return true;
+                //Upper right corner
+                if (map[x][y-1] == 5 && map[x+1][y] == 5)
+                    return true;
+                //Lower right corner
+                if (map[x][y+1] == 5 && map[x+1][y] == 5)
+                    return true;
+                //Lower left corner
+                if (map[x][y+1] == 5 && map[x-1][y] == 5)
                     return true;
             }
         }
