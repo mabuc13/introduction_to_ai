@@ -48,8 +48,8 @@ bool intMap::legalRight()
     if (map[x+1][y] == 5)
         return false;
     //Check if there's a box to the right AND that the box can move to next spot
-    //if(x == width-2) // IF NEXT TO WALL
-       // return false;
+    if(x < width-1) // IF NEXT TO WALL
+       return false;
 
     if (map[x+1][y] == 3)
     {

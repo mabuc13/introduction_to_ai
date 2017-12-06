@@ -23,7 +23,7 @@ public:
     void moveLeft();
 
     bool puzzleSolved(); //This is is simplified method, only good for small scale testing with one box
-    bool goodMap();
+    bool badMap();
     void printMap();
 public:
     bool solved;

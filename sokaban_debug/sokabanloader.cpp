@@ -64,7 +64,8 @@ void SokabanLoader::loadMap(string location)
         }
         txtMap.close();
         intMap = charToIntMap(charMap);
-        printMap();
+        //printMap();
+
     }
     else
         cout << "Could not open file..." << endl;

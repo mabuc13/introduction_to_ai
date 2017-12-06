@@ -37,11 +37,11 @@ public:
 
 public:
 	int data;
-    tree * left;    //the four directions the robot can move
-    tree * right;
-    tree * up;
-    tree * down;
-    tree * parent;
+    tree * left = NULL;   //the four directions the robot can move
+    tree * right = NULL;
+    tree * up = NULL;
+    tree * down = NULL;
+    tree * parent = NULL;
     int nodeCounter;
 	int height;
 	int depth;
