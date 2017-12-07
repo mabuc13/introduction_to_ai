@@ -48,8 +48,8 @@ bool intMap::legalRight()
     if (map[x+1][y] == 5)
         return false;
     //Check if there's a box to the right AND that the box can move to next spot
-    //if(x == width-2) // IF NEXT TO WALL
-       // return false;
+    if(x == width-2) // IF NEXT TO WALL
+       return false;
 
     if (map[x+1][y] == 3)
     {
@@ -99,8 +99,9 @@ bool intMap::legalLeft()
     return true;
 }
 
-void intMap::moveUp()
+char intMap::moveUp()
 {
+    char output = 'u';
     //We know it's a legal move, so in all cases the current xy is free
     if (map[x][y] == 6)
         map[x][y] = 2;
@@ -116,7 +117,10 @@ void intMap::moveUp()
             map[x][y-2] = 7;
         }
         else
+        {
             map[x][y-2] = 3; // Else just box
+        }
+         output = 'U';
     }
 
     else if (map[x][y-1] == 7) // If there's goalbox, check behind goalbox
@@ -127,6 +131,7 @@ void intMap::moveUp()
         else
             map[x][y-2] = 3; // Else just box
         map[x][y-1] = 6; // Move robot to goal
+        output = 'U';
     }
     else if(map[x][y-1] == 2) // If goal
         map[x][y-1] = 6; // Make mangoal
@@ -135,14 +140,15 @@ void intMap::moveUp()
         map[x][y-1] = 4;
 
     y = y - 1;
-
     bool dummy = puzzleSolved();
+    return output;
 
 }
 
 
-void intMap::moveRight()
+char intMap::moveRight()
 {
+    char output = 'r';
     //We know it's a legal move, so in all cases the current xy is free
     if (map[x][y] == 6)
         map[x][y] = 2;
@@ -159,6 +165,7 @@ void intMap::moveRight()
         }
         else
             map[x+2][y] = 3; // Else just box
+        output = 'R';
     }
 
     else if (map[x+1][y] == 7) // If there's goalbox, check behind goalbox
@@ -169,6 +176,7 @@ void intMap::moveRight()
         else
             map[x+2][y] = 3; // Else just box
         map[x+1][y] = 6; // Move robot to goal
+        output = 'R';
     }
     else if(map[x+1][y] == 2) // If goal
         map[x+1][y] = 6; // Make mangoal
@@ -179,11 +187,13 @@ void intMap::moveRight()
     x = x +1;
 
     bool dummy = puzzleSolved();
+    return output;
 
 }
 
-void intMap::moveDown()
+char intMap::moveDown()
 {
+    char output = 'd';
     //We know it's a legal move, so in all cases the current xy is free
     if (map[x][y] == 6)
         map[x][y] = 2;
@@ -200,6 +210,7 @@ void intMap::moveDown()
         }
         else
             map[x][y+2] = 3; // Else just box
+        output = 'D';
     }
 
     else if (map[x][y+1] == 7) // If there's goalbox, check behind goalbox
@@ -210,6 +221,7 @@ void intMap::moveDown()
         else
             map[x][y+2] = 3; // Else just box
         map[x][y+1] = 6; // Move robot to goal
+        output = 'D';
     }
     else if(map[x][y+1] == 2) // If goal
         map[x][y+1] = 6; // Make mangoal
@@ -220,11 +232,12 @@ void intMap::moveDown()
     y = y + 1;
 
     bool dummy = puzzleSolved();
-
+    return output;
 }
 
-void intMap::moveLeft()
+char intMap::moveLeft()
 {
+    char output = 'l';
     //We know it's a legal move, so in all cases the current xy is free
     if (map[x][y] == 6)
         map[x][y] = 2;
@@ -241,6 +254,7 @@ void intMap::moveLeft()
         }
         else
             map[x-2][y] = 3; // Else just box
+        output = 'L';
     }
 
     else if (map[x-1][y] == 7) // If there's goalbox, check behind goalbox
@@ -251,6 +265,7 @@ void intMap::moveLeft()
         else
             map[x-2][y] = 3; // Else just box
         map[x-1][y] = 6; // Move robot to goal
+        output = 'L';
     }
     else if(map[x-1][y] == 2) // If goal
         map[x-1][y] = 6; // Make mangoal
@@ -261,6 +276,7 @@ void intMap::moveLeft()
     x = x - 1;
 
     bool dummy = puzzleSolved();
+    return output;
 }
 
 bool intMap::puzzleSolved()
@@ -297,20 +313,22 @@ bool intMap::badMap()
         {
             if (map[x][y] == 3) //Box at current position
             {
-                //Upper left corner
-                if ((map[x-1][y] == 5) && (map[x][y-1] == 5))
-                    return true;
-                //Upper right corner
-               if ((y-1 > 0) && (x+1 < width -1)){
-               if ((map[x][y-1] == 5) && (map[x+1][y] == 5)) // FEJLEN ER HER, WTF!!
-                    return true;
-               }
-                //Lower right corner
-                if ((map[x][y+1] == 5) && (map[x+1][y] == 5))
-                    return true;
-                //Lower left corner
-                if ((map[x][y+1] == 5) && (map[x-1][y] == 5))
-                    return true;
+                //Does adding and subtracting exceed the vector dimension?
+                if ((x-1 > -1) && (y-1 > -1) && (x+1 < width) && (y+1 < height))
+                {
+                    //Upper left corner
+                    if ((map[x-1][y] == 5) && (map[x][y-1] == 5))
+                        return true;
+                    //Upper right corner
+                   if ((map[x][y-1] == 5) && (map[x+1][y] == 5))
+                        return true;
+                    //Lower right corner
+                    if ((map[x][y+1] == 5) && (map[x+1][y] == 5))
+                        return true;
+                    //Lower left corner
+                    if ((map[x][y+1] == 5) && (map[x-1][y] == 5))
+                        return true;
+                }
             }
         }
     }

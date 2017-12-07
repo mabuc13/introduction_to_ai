@@ -17,10 +17,10 @@ public:
     bool legalDown();
     bool legalLeft();
 
-    void moveUp();
-    void moveRight();
-    void moveDown();
-    void moveLeft();
+    char moveUp();
+    char moveRight();
+    char moveDown();
+    char moveLeft();
 
     bool puzzleSolved(); //This is is simplified method, only good for small scale testing with one box
     bool badMap();

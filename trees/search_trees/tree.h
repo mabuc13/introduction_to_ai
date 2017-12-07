@@ -17,8 +17,8 @@ public:
     tree();
     tree(int dat, tree * lf, tree * rt, tree * dw, tree * u, int h); //Data is the direction
     ~tree();
-    tree * insert(tree * root, int data, int depth, intMap map, int direction, tree * parent);
-    tree * getNewNode(int data, tree * root, intMap oneMap, tree * parent);
+    tree * insert(tree * root, int data, int depth, intMap map, int direction, tree * parent, int insertDepth);
+    tree * getNewNode(int data, tree * root, intMap oneMap, tree * parent, char move);
     int getNodesAmount(tree * root);
     int getLeavesAmount(tree * root);
     void printTree(tree * root, int h);
@@ -37,6 +37,7 @@ public:
 
 public:
 	int data;
+    char move;
     tree * left = NULL;   //the four directions the robot can move
     tree * right = NULL;
     tree * up = NULL;
